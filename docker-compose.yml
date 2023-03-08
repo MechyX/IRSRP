@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  backend_server_container:
+    image: mechy/backend-server
+    build:
+      context: .
+      dockefile: ./server.Dockerfile
+
+
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:

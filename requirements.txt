@@ -1,0 +1,6 @@
+arxiv
+pymongo
+fastapi
+requests
+PyPDF2
+text-preprocessing
