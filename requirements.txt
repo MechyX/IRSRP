@@ -4,3 +4,6 @@ fastapi
 requests
 PyPDF2
 text-preprocessing
+python-dotenv
+black
+isort
