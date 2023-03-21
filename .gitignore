@@ -1,3 +1,7 @@
 .current.env
 venv/
 data/
+*.pyc
+__pycache__/
+.vscode/
+uncased_L-12_H-768_A-12

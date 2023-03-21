@@ -7,3 +7,6 @@ text-preprocessing
 python-dotenv
 black
 isort
+tensorflow==1.15.2
+gensim
+uvicorn[standard]

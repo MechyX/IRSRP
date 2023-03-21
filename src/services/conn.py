@@ -1,30 +1,31 @@
 import os
 
 from dotenv import load_dotenv
-from logger import get_logger
 from pymongo import MongoClient
+
+from src.services.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-load_dotenv()
+
+load_dotenv(".current.env")
 
 
-def get_database():
+def get_papers_collection():
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    CONNECTION_STRING = os.getenv("MONGO_CONNECTION_URL")
-
+    CONNECTION_STRING = "mongodb+srv://mechy:subhamechyir@irsrp-cluster-0.onx2rrm.mongodb.net/?retryWrites=true&w=majority"
+    # CONNECTION_STRING = os.getenv("MONGO_CONNECTION_URL")
     client = MongoClient(CONNECTION_STRING)
 
-    create_collection(client.irsrp)
     db = client.irsrp
     try:
         db.get_collection("papers")
     except Exception as _e:
         logger.info("Papers collection does not exist, creating one...")
-        create_collection()
+        create_collection(db)
 
-    return client.irsrp.papers
+    return db.papers
 
 
 def create_collection(db):
