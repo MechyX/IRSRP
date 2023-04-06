@@ -1,5 +1,5 @@
 1. Install all requirements
-2. Make sure to fill in your mongo cluster URI
+2. Make sure to fill in your mongo cluster URI in .current.env file (Look at .example.env)
 3. Start the server script
 
 
