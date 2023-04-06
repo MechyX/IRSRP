@@ -1,7 +1,7 @@
 import pickle
-from text_preprocessing import to_lower, remove_punctuation, lemmatize_word, remove_itemized_bullet_and_numbering, remove_special_character, normalize_unicode, remove_stopword, stem_word, lemmatize_word, preprocess_text
+from text_preprocessing import to_lower, remove_punctuation, lemmatize_word, remove_stopword, lemmatize_word, preprocess_text
 from gensim import corpora, models, similarities
-
+from gensim.models.coherencemodel import CoherenceModel
 
 class LDA:
     def __init__(self, docs):
@@ -50,6 +50,14 @@ class LDA:
             passes=10,
         )
 
+        topics = self.model.top_topics(corpus=self.corpus_bow, topn=self.no_of_topics)
+        cm = CoherenceModel(model=self.model, corpus=self.corpus_bow, dictionary=self.dictionary, coherence='u_mass')
+        coherence = cm.get_coherence_per_topic()
+
+        print("Topics learned", topics)
+        print("Coherence metrics ", coherence)
+
+
         # Save the trained model to a file
         with open("../../lda_model.pkl", "wb") as f:
             pickle.dump(self.model, f)
@@ -58,6 +66,13 @@ class LDA:
         # Model name shall be lda_model.pkl
         with open("../../lda_model.pkl", "rb") as f:
             self.model = pickle.load(f)
+        
+        topics = self.model.top_topics(corpus=self.corpus_bow, topn=self.no_of_topics)
+        cm = CoherenceModel(model=self.model, corpus=self.corpus_bow, dictionary=self.dictionary, coherence='u_mass')
+        coherence = cm.get_coherence_per_topic()
+
+        print("Topics learned", topics)
+        print("Coherence metrics ", coherence)
 
 
 if __name__ == "__main__":
@@ -70,7 +85,7 @@ if __name__ == "__main__":
         {"id": 5, "text": "The bird in the tree"},
     ]
     query = "bird"
-    model = LDA(corpus_dict=docs)
+    model = LDA(docs=docs)
     model.train_and_save()
     ranked_docs = model.predict(query)
     print(ranked_docs)
