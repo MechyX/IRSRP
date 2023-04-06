@@ -14,8 +14,7 @@ load_dotenv(".current.env")
 
 def get_papers_collection():
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    CONNECTION_STRING = "mongodb+srv://mechy:subhamechyir@irsrp-cluster-0.onx2rrm.mongodb.net/?retryWrites=true&w=majority"
-    # CONNECTION_STRING = os.getenv("MONGO_CONNECTION_URL")
+    CONNECTION_STRING = os.getenv("MONGO_CONNECTION_URL")
     client = MongoClient(CONNECTION_STRING)
 
     db = client.irsrp
